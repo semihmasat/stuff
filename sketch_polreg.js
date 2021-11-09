@@ -19,7 +19,7 @@ function setup(){
     c = tf.variable(tf.scalar(random(-1,1)));
     d = tf.variable(tf.scalar(random(-1,1)));
 
-    for (let x = -1; x < 1.0002; x+= 0.05){
+    for (let x = -1; x < 1.0002; x+= 0.01){
         curveX.push(x);
     }
 }
