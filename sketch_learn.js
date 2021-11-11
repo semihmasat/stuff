@@ -1,65 +1,32 @@
-let stored_x = [];
-let stored_y = [];
+let trees;
+let model_position = {x:0,y:0}
 
-let isDragging = false;
-let draggin_index = 0;
-
-function setup() {
-  createCanvas(600, 400);
-  
-  background(200);
+function preload() {
+  trees = loadModel('assets/trees9.obj',true);
 }
 
-function touchMoved() {
-  background(200);
-
-  drawingContext.shadowOffsetX = 5;
-  drawingContext.shadowOffsetY = 0;
-  drawingContext.shadowBlur = 10;
-  drawingContext.shadowColor = "pink";
-
-  ellipse(mouseX, mouseY, 50, 50);
-
-  return false;
-}
-
-function mousePressed(){
-  for(let i = stored_x.length; i > 0; i--){
-    let elx = stored_x[i-1];
-    let ely = stored_y[i-1];
-
-    if(dist(elx,ely,mouseX,mouseY) < 25){
-      isDragging = true;
-      draggin_index = i-1;
-
-      stored_x[i-1] = -100;
-      break;
-    }
-  }
-}
-
-function mouseReleased() {
-  background(200);
-
-  if(isDragging){
-    stored_x[draggin_index] = mouseX;
-    stored_y[draggin_index] = mouseY;
-  }else{
-    stored_x.push(mouseX);
-    stored_y.push(mouseY);
-  }
-  
-  isDragging = false;
+function setup(){
+  createCanvas(400,400,WEBGL);
 }
 
 function draw(){
-  for( let i = 0; i < stored_x.length; i++){
-    ellipse(stored_x[i], stored_y[i], 50, 50);
-  }
+  if(keyIsDown(UP_ARROW)){
+    model_position.y -=1;
+  };
+  if(keyIsDown(DOWN_ARROW)){
+    model_position.y +=1;
+  };
+  if(keyIsDown(LEFT_ARROW)){
+    model_position.x -=1;
+  };
+  if(keyIsDown(RIGHT_ARROW)){
+    model_position.x +=1;
+  };
 
-  if(mouseIsPressed){
-    ellipse(mouseX, mouseY, 50, 50);
-  }
-
-  text(isDragging,10,10,30,30);
+  background(200);
+  translate(model_position.x,model_position.y);
+  rotateX(3);
+  rotateY(frameCount * 0.01);
+  normalMaterial();
+  model(trees);
 }
