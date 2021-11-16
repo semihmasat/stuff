@@ -1,8 +1,45 @@
 let character;
 let playcam;
+let canvas;
+
+let mapobjs = [
+  {
+    "type":"primative",
+    "primative_type":"box",
+    "position": [0,0,0],
+    "size": 100
+  },{
+    "type":"primative",
+    "primative_type":"box",
+    "position": [110,0,0],
+    "size": 100
+  },{
+    "type":"primative",
+    "primative_type":"box",
+    "position": [220,0,0],
+    "size": 100
+  },{
+    "type":"primative",
+    "primative_type":"box",
+    "position": [-110,0,0],
+    "size": 100
+  },
+  {
+    "type":"primative",
+    "primative_type":"box",
+    "position": [-220,0,0],
+    "size": 100
+  },{
+    "type":"primative",
+    "primative_type":"plane",
+    "position":[0,50,0],
+    "rotation":[0.5,0,0],
+    "size":1000
+  }
+]
 
 function setup() {
-  createCanvas(400, 400,WEBGL);
+  canvas = createCanvas(400, 400,WEBGL);
   playcam = createCamera();
   ambientLight(255);
 
@@ -13,12 +50,7 @@ function setup() {
   }
 }
 
-function draw() {
-  debugMode();
-  background(220);
-
-  box(100,100);
-
+function move(){
   if(keyIsDown(LEFT_ARROW)){
     playcam.pan((PI/3)/deltaTime);
   }
@@ -63,4 +95,33 @@ function draw() {
   }
 
   playcam.setPosition(character.position.x,character.position.y,character.position.z)
+}
+
+function drawgameobjects(context,PI){
+  mapobjs.forEach(function(obj){
+    push();
+    translate(obj["position"][0],obj["position"][1],obj["position"][2]);
+    if(obj["rotation"]!=undefined){
+      rotateX(obj["rotation"][0]*PI);
+      rotateY(obj["rotation"][1]*PI);
+      rotateZ(obj["rotation"][2]*PI);
+    }
+    if(obj["type"]=="primative"){
+      if(obj["primative_type"] == "box"){
+        context.box(obj["size"]);
+      }else if(obj["primative_type"] == "plane"){
+        context.plane(obj["size"])
+      }
+    }
+    pop();
+  });
+}
+
+function draw() {
+  debugMode();
+  background(220);
+
+  
+  drawgameobjects(this,PI);
+  move();
 }
