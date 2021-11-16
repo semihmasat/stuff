@@ -107,6 +107,7 @@ function move(){
 
   character.looks_at.set(playcam.centerX,playcam.centerY,playcam.centerZ)
 
+  speedbuff = 1;
   if(keyIsDown(UP_ARROW)||keyIsDown(DOWN_ARROW)||keyIsDown(87)||keyIsDown(83)||keyIsDown(65)||keyIsDown(68)){
     let xdiff = character.position.x - character.looks_at.x
     let zdiff = character.position.z - character.looks_at.z
@@ -124,7 +125,12 @@ function move(){
       zfinal = Math.abs(zdiff);
     }
 
-    let finalvector = createVector(xfinal*0.01,0,zfinal*0.01);
+    if(keyIsDown(SHIFT)){
+      speedbuff = 2;
+    }
+    
+    let finalvector = createVector(xfinal*0.01*speedbuff,0,zfinal*0.01*speedbuff);
+    
     if(keyIsDown(87)){
       character.position = character.position.add(finalvector);
     }
