@@ -28,7 +28,7 @@ function draw() {
 
   character.looks_at.set(playcam.centerX,playcam.centerY,playcam.centerZ)
 
-  if(keyIsDown(UP_ARROW)||keyIsDown(DOWN_ARROW)){
+  if(keyIsDown(UP_ARROW)||keyIsDown(DOWN_ARROW)||keyIsDown(87)||keyIsDown(83)||keyIsDown(65)||keyIsDown(68)){
     let xdiff = character.position.x - character.looks_at.x
     let zdiff = character.position.z - character.looks_at.z
 
@@ -46,11 +46,19 @@ function draw() {
     }
 
     let finalvector = createVector(xfinal*0.01,0,zfinal*0.01);
-    if(keyIsDown(UP_ARROW)){
+    if(keyIsDown(UP_ARROW)||keyIsDown(87)){
       character.position = character.position.add(finalvector);
     }
-    if(keyIsDown(DOWN_ARROW)){
+    if(keyIsDown(DOWN_ARROW)||keyIsDown(83)){
       character.position = character.position.sub(finalvector);
+    }
+    if(keyIsDown(65)){
+      leftlookingvector = createVector(-finalvector.z,finalvector.y,finalvector.x);
+      character.position = character.position.sub(leftlookingvector);
+    }
+    if(keyIsDown(68)){
+      leftlookingvector = createVector(-finalvector.z,finalvector.y,finalvector.x);
+      character.position = character.position.add(leftlookingvector);
     }
   }
 
