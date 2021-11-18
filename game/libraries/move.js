@@ -21,16 +21,13 @@ function istiltable(){
       tilt = -(PI/3)/1000*deltaTime;
       playcam.tilt(tilt);
   
-      console.log("tilt: ",tilt);
       if(!istiltable()){
         playcam.tilt(-tilt*10);
-        console.log("tiltback",tilt,-tilt);
       }
     }
     if(keyIsDown(DOWN_ARROW)){
       tilt = (PI/3)/1000*deltaTime
       playcam.tilt(tilt);
-      console.log("tilt: ",tilt);
   
       if(!istiltable()){
         playcam.tilt(-tilt*5);
